@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body{
+                background-color: black;
+            }
+            .glyphbox{
+                border-style: dashed;
+                border-color: white;
+                max-width: fit-content;
+                padding: 4px;
+                margin-bottom: 4px;
+                margin-right: 4px;
+                display: inline-block;
+            }
+            .glyphlabel{
+                color: white;
+                margin: 0px;
+                text-align: center;
+                font-family: monospace;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="box"></div>
+        <script>
+            function add_char_display(c){
+                let div = document.createElement("div")
+                div.className = "glyphbox"
+                let img = document.createElement("img")
+                img.width = 100
+                img.height = 100
+                img.src = c+".svg"
+                div.appendChild(img)
+                let p = document.createElement("p")
+                p.className = "glyphlabel"
+                p.textContent = c
+                div.appendChild(p)
+                document.getElementById("box").appendChild(div)
+            }
+            let CHARS = "abcdefghijklmnopqrstuԱvwxyz"
+            for(let i=0;i<CHARS.length;++i){
+                add_char_display(CHARS[i])
+            }
+        </script>
+    </body>
+</html>

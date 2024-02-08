@@ -1,0 +1,216 @@
+.nowrap>*{
+    display: inline-block;
+}
+w-vr{
+    background-color: white;
+}
+h1{
+    margin: 0;
+}
+w-sentence{
+    display: none;
+}
+.glyph{
+    position: absolute;
+}
+.textunit{
+    position: absolute;
+}
+.word{
+    position: absolute;
+}
+.sentence{
+    position: absolute;
+}
+.line{
+    position: absolute;
+}
+.popup-str{
+    font-size: 1em;
+}
+.popup-wtr{
+    font-size: 1.5em;
+}
+.word-bg-box{
+    background-color: black;
+    padding: 5px;
+}
+.nowrap{
+    white-space: nowrap;
+}
+.inline{
+    display: inline-block;
+    vertical-align: top;
+}
+
+
+
+body{
+    background-color: black;
+    stroke: white;
+    user-select: none;
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+}
+#page{
+    color: white;
+    flex-grow: 1;
+    overflow: auto;
+}
+
+.box{
+    border: dashed white 2px;
+    padding: 5px;
+    width: fit-content;
+    height: fit-content;
+}
+.box>*{
+    position: relative;
+}
+
+.popup-box{
+    z-index: 999;
+    margin-left: 14px;
+    min-width: 50px;
+    text-align: center;
+    transition: opacity 0.3s;
+    background-color: white;
+    position: absolute;
+    pointer-events: none;
+}
+.popup-box p{
+    margin: 0;
+    font-family: arial;
+}
+
+.sidebar{
+    overflow: hidden;
+    width: fit-content;
+    height: 100%;
+    background-color: #666666;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.sidebar>*{
+    visibility: hidden;
+}
+.sidebar .word-bg-box{
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+.guessbox{
+    font-family: arial;
+    font-size: 1.6em;
+    background-color: #d4d4d4;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 4px;
+}
+.toolbar-outer{
+    border-top: dashed white 2px;
+    visibility: visible;
+    width: 100%;
+    height: 30px;
+}
+.toolbar{
+    width: fit-content;
+    height: 100%;
+    margin: auto;
+}
+.toolbar .button{
+    display: inline-block;
+    cursor: pointer;
+    height: 100%;
+    aspect-ratio: 1;
+}
+dialog.modal{
+    width: 60%;
+    height: 60%;
+    background-color: black;
+    color: white;
+    padding: 0px;
+    border: 0px;
+}
+dialog.modal>:only-child{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 1rem;
+    border: solid white 2px;
+}
+dialog.modal::backdrop{
+    backdrop-filter: brightness(25%);
+}
+.tbb{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+}
+.tbbbar{
+    width: 100%;
+    height: fit-content;
+    border-bottom: solid white 2px;
+}
+.tbblabel{
+    width: fit-content;
+    padding: 3px;
+    display: inline-block;
+    font-size: 1.5em;
+}
+.tbblabel.active{
+    background-color: #3f3f3f;
+}
+.tbbbody{
+    width: 100%;
+}
+.menucontent{
+    font-size: 1.3em;
+}
+.menuentry{
+    margin-top: 9px;
+}
+.dictentryouter{
+    padding: 5px;
+    border: dotted white 2px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+.dictentry{
+    display: flex;
+    justify-content: space-between;
+}
+.dict{
+    width: fit-content !important;
+    white-space: normal;
+}
+.dictentry>*{
+    display: inline-block;
+    position: relative;
+}
+.dictguessvcb{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.dictguess{
+    margin: 0;
+    font-size: 2.1em;
+    width: 2em;
+}
+.flex{
+    display: flex;
+    gap: 5px;
+}
