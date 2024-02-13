@@ -214,3 +214,11 @@ dialog.modal::backdrop{
     display: flex;
     gap: 5px;
 }
+.prevbtn{
+    display: inline-block;
+    cursor: pointer;
+}
+.pagetitle{
+    white-space: nowrap;
+    display: inline-block;
+}

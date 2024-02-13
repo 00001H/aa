@@ -10,6 +10,7 @@ let gamemenu = {};
 let dictpopup = {};
 let WORDPAD = 0.1;
 let interactive = false;
+let TOROOT="404";
 function defaultunit(x,un){
     if(typeof(x) === "number"){
         return x+un;
@@ -47,7 +48,7 @@ class Glyph extends Placeable{
         img.classList.add("glyph");
         eresize(img,size,size);
         img.draggable = false;
-        img.src = `/aa/glyphs/${this.glyph('spc')}.svg`;
+        img.src = TOROOT+`/glyphs/${this.glyph('spc')}.svg`;
         return img;
     }
     glyph(orelse=""){
@@ -151,7 +152,7 @@ class Word extends Placeable{
             img.classList.add("line");
             emove(img,size*(i*(1+WORDPAD)-WORDPAD),0);
             eresize(img,size*WORDPAD,size);
-            img.src = `/aa/glyphs/line.svg`;
+            img.src = TOROOT+`/glyphs/line.svg`;
             div.append(img);
         }
         return div;
@@ -233,7 +234,7 @@ class Sentence extends Placeable{
     }
     dims(wsize){
         let padsize = WORDPAD*wsize;
-        let x = -padsize;
+        let x = 0;
         let y = wsize;
         let mx = 0;
         for(let i=0;i<this.g.length;++i){
@@ -245,7 +246,7 @@ class Sentence extends Placeable{
                 mx = Math.max(x-padsize,mx);
             }
         }
-        return [x,y];
+        return [mx,y];
     }
     make(wsize){
         let div = newdiv("sentence");
@@ -276,7 +277,7 @@ class SentenceElement extends HTMLElement{
         if(this.hasAttribute("style")){
             div.setAttribute("style",this.getAttribute("style"));
         }
-        let stc = new Sentence(this.getAttribute("s"));
+        let stc = new Sentence(this.getAttribute("s").replace("|","\n"));
         let dz = stc.dims(WORDSIZE);
         eresize(div,dz[0],dz[1]);
         stc.place(div,this.pageX,this.pageY,WORDSIZE);
@@ -378,13 +379,13 @@ function init_hover_popup(){
             ehide(this.strans);
         }else{
             eunhide(this.strans);
-            this.strans.innerHTML = this.stranssrc.trans();
+            this.strans.innerHTML = this.stranssrc.trans().replace("\n","<br>");
         }
         if(this.wtranssrc === null){
             ehide(this.wtrans);
         }else{
             eunhide(this.wtrans);
-            this.wtrans.innerHTML = this.wtranssrc.trans();
+            this.wtrans.innerHTML = this.wtranssrc.trans().replace("\n","<br>");
         }
     }
     hoverpopup.box = newdiv("popup-box");
@@ -439,12 +440,12 @@ function init_sidebar(){
             return button;
         }
     
-        sidebar.toolbar.dictbutton = new_toolbar_button("/aa/glyphs/a.svg", function(){
+        sidebar.toolbar.dictbutton = new_toolbar_button(TOROOT+"/glyphs/a.svg", function(){
             dictpopup.updatecontents();
             dictpopup.dlg.showModal();
         });
     
-        sidebar.toolbar.menubutton = new_toolbar_button("/aa/misc/ellipses.svg", function(){
+        sidebar.toolbar.menubutton = new_toolbar_button(TOROOT+"/misc/ellipses.svg", function(){
             gamemenu.dlg.showModal();
         });
     }
@@ -571,10 +572,37 @@ onload = function(){
             break;
         default:
             break;
-      }
+    }
     page = document.getElementById("page");
     interactive = !page.hasAttribute("noninteractive");
     console.log("Interactive: ",interactive);
+    if(page.hasAttribute("rootpage")){
+        TOROOT = ".";
+    }else{
+        TOROOT = "..";
+    }
+    String.prototype.replacerange = function(start,end,withstr){
+        return this.substring(0,start)+withstr+this.substring(end);
+    }
+    let pn = location.pathname;
+    let ra = /^.+\/([0-9]+)\.html$/gd.exec(pn);
+    if(ra!==null){
+        let pgno = Number(ra[1]);
+        let lastpage = pn.replacerange(...ra.indices[1],(pgno-1).toString());
+        let nextpage = pn.replacerange(...ra.indices[1],(pgno+1).toString());
+        for(let e of document.getElementsByClassName("prevbtn")){
+            e.onclick = function(){
+                location.pathname = lastpage;
+            }
+            e.src = TOROOT+"/misc/prev.svg"
+        }
+        for(let e of document.getElementsByClassName("nextbtn")){
+            e.onclick = function(){
+                location.pathname = nextpage;
+            }
+            e.src = TOROOT+"/misc/next.svg"
+        }
+    }
     //Do not define earlier, otherwise we initialize Sentences before interactive is set
     customElements.define("w-sentence",SentenceElement);
     if(page.hasAttribute("size")){
