@@ -219,6 +219,10 @@ dialog.modal::backdrop{
     display: inline-block;
     cursor: pointer;
 }
+.nextbtn{
+    display: inline-block;
+    cursor: pointer;
+}
 .pagetitle{
     white-space: nowrap;
     display: inline-block;
