@@ -146,6 +146,7 @@ dialog.modal>:only-child{
     box-sizing: border-box;
     padding: 1rem;
     border: solid white 2px;
+    overflow: auto;
 }
 dialog.modal::backdrop{
     backdrop-filter: brightness(25%);
@@ -207,8 +208,8 @@ dialog.modal::backdrop{
 }
 .dictguess{
     margin: 0;
-    font-size: 2.1em;
-    width: 2em;
+    font-size: 1.78em;
+    width: 4em;
 }
 .flex{
     display: flex;

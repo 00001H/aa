@@ -134,8 +134,18 @@ class Word extends Placeable{
                 hoverpopup.resettrans();
                 hoverpopup.stranssrc = __capthis.parent;
                 hoverpopup.wtranssrc = __capthis;
-                game.see(__capthis.word());
-                game.save(_storeto);
+                let m = false;
+                if(__capthis.parent !== null){
+                    for(let w of __capthis.parent.g){
+                        if(w === null)continue;
+                        m = m || game.see(w.word());
+                    }
+                }else{
+                    m = game.see(__capthis.word());
+                }
+                if(m){
+                    game.save(_storeto);
+                }
                 hoverpopup.trans();
             };
             div.onclick = function(){

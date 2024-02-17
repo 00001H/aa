@@ -56,7 +56,11 @@ export class Game{
         return Object.keys(this.guess).length;
     }
     see(w){
+        if(this._seen.has(w)){
+            return false;
+        }
         this._seen.add(w);
+        return true;
     }
     getguess(w){
         return this.guess[w] ?? "";
