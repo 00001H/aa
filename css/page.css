@@ -17,10 +17,13 @@ w-sentence{
     position: absolute;
 }
 .word{
-    position: absolute;
+    vertical-align: top;
+    position: relative;
+    display: inline-block;
+    margin: 3.5px;
 }
 .sentence{
-    position: absolute;
+    white-space: normal;
 }
 .line{
     position: absolute;

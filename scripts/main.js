@@ -89,9 +89,8 @@ class TextUnit extends Placeable{
         return div;
     }
 }
-class Word extends Placeable{
+class Word{
     constructor(g,interactive=undefined){
-        super();
         this.interactive = interactive;
         this.parent = null;
         if(g instanceof TextUnit){
@@ -113,7 +112,7 @@ class Word extends Placeable{
         }
         return s;
     }
-    width(size){
+    _width(size){
         return size*(this.g.length*(1+WORDPAD)-WORDPAD);
     }
     trans(){
@@ -121,7 +120,7 @@ class Word extends Placeable{
     }
     make(size){
         let div = newdiv("word");
-        eresize(div,this.width(size),size);
+        eresize(div,this._width(size),size);
         let x = 0;
         for(let gl of this.g){
             gl.place(div,x,0,size);
@@ -168,9 +167,8 @@ class Word extends Placeable{
         return div;
     }
 }
-class Sentence extends Placeable{
+class Sentence{
     constructor(g,interactive=undefined){
-        super();
         if(g instanceof Array){
             g.forEach(this.pushg);
         }else if(typeof(g)==="string"||g instanceof String){
@@ -242,39 +240,17 @@ class Sentence extends Placeable{
         }
         return s;
     }
-    dims(wsize){
-        let padsize = WORDPAD*wsize;
-        let x = 0;
-        let y = wsize;
-        let mx = 0;
-        for(let i=0;i<this.g.length;++i){
-            if(this.g[i] === null){
-                x = 0;
-                y += padsize+wsize;
-            }else{
-                x += this.g[i].width(wsize)+padsize;
-                mx = Math.max(x-padsize,mx);
-            }
-        }
-        return [mx,y];
-    }
     make(wsize){
         let div = newdiv("sentence");
-        let x = 0;
-        let y = 0;
-        let mx = 0;
         let padsize = WORDPAD*wsize;
         for(let gl of this.g){
             if(gl === null){
-                x = 0;
-                y += padsize+wsize;
+                div.append(document.createElement("br"));
+                div.append(document.createElement("br"));
             }else{
-                gl.place(div,x,y,wsize);
-                x += gl.width(wsize)+padsize;
-                mx = Math.max(x-padsize,mx);
+                div.append(gl.make(wsize));
             }
         }
-        eresize(div,mx,y+wsize);
         return div;
     }
 };
@@ -288,9 +264,7 @@ class SentenceElement extends HTMLElement{
             div.setAttribute("style",this.getAttribute("style"));
         }
         let stc = new Sentence(this.getAttribute("s").replace("|","\n"));
-        let dz = stc.dims(WORDSIZE);
-        eresize(div,dz[0],dz[1]);
-        stc.place(div,this.pageX,this.pageY,WORDSIZE);
+        div.append(stc.make(WORDSIZE));
         this.replaceWith(div);
     }
 }
